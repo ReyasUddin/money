@@ -1,7 +1,7 @@
 // My Money Book: keeps the app itself on this phone, so it opens at once, even without internet.
 // Your money data is not kept here (the app keeps its own copy in the phone's storage), and reading or saving
 // always goes straight to Google through your private link.
-const VERSION = 'mmb-12';
+const VERSION = 'mmb-13';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 
 self.addEventListener('install', e => {

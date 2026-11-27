@@ -540,7 +540,8 @@ textarea.ntext { min-height: 300px; font: 15px/1.5 var(--font); white-space: pre
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-/* My Money Book app, version 12 (27 Nov 2026), with Code.gs version 12:
+/* My Money Book app, version 13 (27 Nov 2026), with Code.gs version 13 (12 works too):
+   - 13: a one-time "Set up now" note for the lighter sheet (Code.gs 13 removes formulas only the app needs and works them out itself).
    - 12: the same file runs inside Apps Script (google.script.run) and as an app installed from GitHub Pages. Installed,
      it is kept on the phone (opens at once, even offline) and reads and saves through your private link with your key
      (asked for once, kept only on this phone). Your name and your family's names are no longer written in this file:
@@ -1255,7 +1256,7 @@ textarea.ntext { min-height: 300px; font: 15px/1.5 var(--font); white-space: pre
     sec.latest = '<section class="panel"><h2>Latest entries<span class="grow"></span><button class="linkbtn" data-go="entries">See all</button></h2><div class="rows">' + (recent.length ? recent.map(entryRow).join('') : '<div class="empty">No entries yet.</div>') + '</div></section>';
     const L = ['hero', 'actions', 'work', 'attention', 'tasks', 'categories'], R = ['money', 'upcoming', 'latest'];
     const pick = keys => want.filter(k => keys.indexOf(k) >= 0).map(k => sec[k]).filter(Boolean).join('');
-    return (D.ready ? '' : setupNote()) + (D.v5ready ? '' : v5Note()) + v6Note() + v9Note() + v10Note() + '<div class="grid home-grid"><div class="stack">' + pick(L) + '</div><div class="stack">' + pick(R) + '</div></div>';
+    return (D.ready ? '' : setupNote()) + (D.v5ready ? '' : v5Note()) + v6Note() + v9Note() + v10Note() + v13Note() + '<div class="grid home-grid"><div class="stack">' + pick(L) + '</div><div class="stack">' + pick(R) + '</div></div>';
   };
   /** Home card: tap a company to log minutes (or a total), see today and this month in $ and ৳ next to what you spent. */
   function workCard(st, wst) {
@@ -4119,6 +4120,11 @@ textarea.ntext { min-height: 300px; font: 15px/1.5 var(--font); white-space: pre
   // version 10: shown until its setup has run (faster Food and Budget, the app icon)
   const v10Note = () => D && D.v10 && D.v10ready === false ? '<div class="note warn" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span style="flex:1;min-width:220px">One more step for version 10: tap <b>Set up now</b>. ' +
     'It makes saving much faster: Food and Budget keeps ' + 150 + ' empty automatic rows instead of about ' + ((D.fbFree || {}).rows > 400 ? ((D.fbFree || {}).rows).toLocaleString('en-US') : '2,670') + ' (a backup copy is made first, and every total is checked before and after). It also adds the app icon for your home screen. About a minute.</span>' +
+    '<button class="btn btn-primary btn-sm" data-act="setup-now">Set up now</button></div>' : '';
+
+  // version 13: shown until its setup has run (the lighter sheet)
+  const v13Note = () => D && D.v13 && D.v13ready === false && D.v10ready !== false ? '<div class="note warn" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><span style="flex:1;min-width:220px">One more step for version 13: tap <b>Set up now</b>. ' +
+    'It makes the sheet lighter, so saving is faster. You still see everything here. A backup is made first and every total is checked. About a minute.</span>' +
     '<button class="btn btn-primary btn-sm" data-act="setup-now">Set up now</button></div>' : '';
 
   /** The "Who was it for?" list: the app's guesses and spending that says no one. Tap a picture for each, then Save. */
